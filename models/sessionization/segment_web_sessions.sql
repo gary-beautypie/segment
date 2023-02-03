@@ -32,7 +32,7 @@ with sessions as (
 agg as (
 
     select
-        blended_user_id,
+        user_id,
         count(*) as starting_session_number
     from {{this}}
 

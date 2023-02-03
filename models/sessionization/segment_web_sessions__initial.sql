@@ -29,7 +29,17 @@
     'referrer' : 'referrer',
     'referrer_host' : 'referrer_host',
     'device' : 'device',
-    'device_category' : 'device_category'
+    'device_category' : 'device_category',
+    'device_browser' : 'device_browser',
+    'device_browser_size' : 'device_browser_size',
+    'device_browser_version' : 'device_browser_version',
+    'device_manufacturer' : 'device_manufacturer',
+    'device_model' : 'device_model',
+    'os_name' : 'os_name',
+    'os_version' : 'os_version',
+    'location_city' : 'location_city',
+    'location_region' : 'location_region',
+    'location_country' : 'location_country'
     } %}
 
 {% set last_values = {
