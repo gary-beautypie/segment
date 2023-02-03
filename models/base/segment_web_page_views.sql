@@ -70,7 +70,7 @@ renamed as (
         context_os_version as os_version,
         context_location_city as location_city,
         context_location_region as location_region,
-        context_location_country as location_country,
+        context_location_country as location_country
 
         {% if var('segment_pass_through_columns') != [] %}
         ,
