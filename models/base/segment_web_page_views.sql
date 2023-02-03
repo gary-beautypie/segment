@@ -87,10 +87,9 @@ final as (
     select
         *,
         case
-            when device = 'iPhone' then 'iPhone'
-            when device = 'Android' then 'Android'
-            when device in ('iPad', 'iPod') then 'Tablet'
-            when device in ('Windows', 'Macintosh', 'X11') then 'Desktop'
+            when device in ('iPhone', 'Android') then 'mobile'
+            when device in ('iPad', 'iPod') then 'tablet'
+            when device in ('Windows', 'Macintosh', 'X11') then 'desktop'
             else 'Uncategorized'
         end as device_category
     from renamed
