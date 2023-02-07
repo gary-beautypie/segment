@@ -34,6 +34,7 @@ renamed as (
         sent_at as sent_at_tstamp,
         timestamp as tstamp,
 
+        event,
         url as page_url,
         {{ dbt_utils.get_url_host('url') }} as page_url_host,
         path as page_url_path,
