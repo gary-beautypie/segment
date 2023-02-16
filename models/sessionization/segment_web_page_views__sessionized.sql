@@ -93,7 +93,20 @@ new_sessions as (
         case
             when period_of_inactivity <= {{var('segment_inactivity_cutoff')}} then 0
             else 1
-        end as new_session
+        end as new_session_inactivity,
+        case
+            when previous_tstamp::DATE != tstamp::DATE then 1
+            else 0
+        end as new_session_midnight,
+        case
+           when referrer_host ilike '%beautypiehelp.zendesk%' or referrer_host = 'beautypie.com' then 0
+           when referrer_host is NULL and page_view_number = 1 then 1
+           when referrer_host is NULL then 0
+           when referrer_host = '' then 0 -- TBC
+           else 1
+        end as new_session_referrer,
+        GREATEST(new_session_inactivity, new_session_midnight, new_session_referrer) AS new_session
+
     from diffed
 
 ),
