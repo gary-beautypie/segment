@@ -71,6 +71,8 @@ renamed as (
         context_location_city as location_city,
         context_location_region as location_region,
         context_location_country as location_country
+        context_timezone as timezone,
+        context_store as store_name,
 
         {% if var('segment_pass_through_columns') != [] %}
         ,
