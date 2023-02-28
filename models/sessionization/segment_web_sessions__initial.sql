@@ -86,13 +86,52 @@ agg as (
         first_value({{key}}) over ({{window_clause}}) as {{value}},
         {% endfor %}
 
-        {% for (key, value) in last_values.items() %}
+        {# {% for (key, value) in last_values.items() %}
         last_value({{key}}) over ({{window_clause}}) as {{value}}{% if not loop.last %},{% endif %}
+        {% endfor %} #}
+
+        {% for (key, value) in last_values.items() %}
+        CASE
+            WHEN (key = 'PAGE_CATEGORY') THEN
+                NULL
+            ELSE
+                last_value({{key}}) over ({{window_clause}})
+        END AS {{value}}{% if not loop.last %},{% endif %}
         {% endfor %}
 
     from pageviews_sessionized
 
 ),
+
+agg_page as (
+
+    select distinct
+
+        session_id,
+        anonymous_id,
+        min(tstamp) over ( {{partition_by}} ) as session_start_tstamp,
+        max(tstamp) over ( {{partition_by}} ) as session_end_tstamp,
+
+        first_value(page_category) over ({{window_clause}}) as first_page_category,
+
+        last_value(page_category) over ({{window_clause}}) as last_page_category
+
+    from pageviews_sessionized
+    where event = 'Pages'
+
+),
+
+agg_total as (
+
+    select
+
+    from
+      agg
+    left join
+      agg_page
+      on agg.session_id = agg_page.session_id
+
+)
 
 diffs as (
 
